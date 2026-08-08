@@ -1,7 +1,5 @@
-# MULTI
-**MULTI** (**M**ulti-tissue **U**nified **L**ikelihood-based **T**ranscriptomic **I**ntegration) is a multi-tissue Mendelian randomization method
-
-multivariable Mendelian randomization method, and is the short name of 'MVMR incorporating **R**are variants **A**ccounting for multiple **R**isk factors and shared horizontal pl**E**iotopy'.
+# RARE
+**RARE** is a multivariable Mendelian randomization method, and is the short name of 'MVMR incorporating **R**are variants **A**ccounting for multiple **R**isk factors and shared horizontal pl**E**iotopy'.
 
 RARE is the only method (2024-07-31) that accounts for the impact of rare variants in causal inference while simultaneously considers UHP and CHP.
 
