@@ -74,8 +74,6 @@ mydata <- cbind( bx = cbind( beta_X1, beta_X2, beta_PRS ),
 ```
 <p align="center">
   <img src="https://github.com/Hide-in-lab/RARE/blob/Supplementary/Github_RARE/Input%20Data.png?raw=true" width="60%" />
-  <br>
-  <b>Fig.1 </b>
 </p>
 
 
@@ -86,8 +84,6 @@ results
 ```
 <p align="center">
   <img src="https://github.com/Hide-in-lab/RARE/blob/Supplementary/Github_RARE/Results.png" width="60%" />
-  <br>
-  <b>Fig.1 </b>
 </p>
 
 
