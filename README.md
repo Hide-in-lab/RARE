@@ -82,6 +82,8 @@ mydata <- cbind( bx = cbind( beta_X1, beta_X2, beta_PRS ),
 results <- RARE::adapt( mydata, iter_times = 5000 )
 results
 ```
+Here, the results for 'beta1', 'beta2', and 'beta3' represents the estimated statistics for the main exposure, secondary exposure and PRS on the outcome, respectively.
+
 <p align="center">
   <img src="https://github.com/Hide-in-lab/RARE/blob/Supplementary/Github_RARE/Results.png" width="60%" />
 </p>
