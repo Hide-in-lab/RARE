@@ -1,6 +1,5 @@
 <div align="justify">
 
-
 # RARE
 
 ## Brief Introduction
@@ -25,14 +24,24 @@ RARE is the only method (2024-07-31) that accounts for the impact of rare varian
 
 # Data Input
 
-Suppose we have _**K**_ exposures of interest, denoted as $X_1, X_2, \cdots, X_K$, and one outcome _**Y**_. We let $X_1$ to be the $\color{red}{\textbf{primary exposure}}$, and $X_i$ (_i_ = 2, ... ,_K_) are considered as the $\color{red}{\textbf{secondary exposures}}$. Our primary objective is to estimate the causal effect between the primary exposure $X_1$ and the outcome _**Y**_. Suppose there are _**p**_ shared SNPs, among which $n_c$ are common variants and $n_r$ are rare variants, that are simultaneously associated with these exposures, with _**P**_ values below a given threshold (e.g., 5*e-8) from GWAS studies. What we need are:
+Suppose we have _**K**_ exposures of interest, denoted as $X_1, X_2, \cdots, X_K$, and one outcome _**Y**_. We let $X_1$ to be the $\color{red}{\textbf{primary exposure}}$, and $X_i$ ($i$ = 2, ... ,_K_) are considered as the $\color{red}{\textbf{secondary exposures}}$. Our primary objective is to estimate the causal effect between the primary exposure $X_1$ and the outcome _**Y**_. Suppose there are _**p**_ shared SNPs, among which $n_c$ are common variants and $n_r$ are rare variants, that are simultaneously associated with these exposures, with _**P**_ values below a given threshold (e.g., 5E-8) from GWAS studies. What we need are:
 
-**1)** _**Estimated IV-to-exposure effect size**_ $`\hat{\boldsymbol{\gamma}}_{ij}`$ and its _**corresponding standard error**_ $`\hat{\mathbf{S}}_{\gamma_{ij}}`$, where
+**1)** _**Estimated IV-to-exposure effect size**_ $`\hat{\boldsymbol{\gamma}}_{ij}`$ and its _**corresponding standard error**_ $`\hat{\mathbf{S}}_{\gamma_{ij}}`$, where $i$ ($i = 1, 2, \cdots, K$) represents the $i$-th tissue, and $j$ ($j = 1, 2, \cdots, p$) represents the $j$-th IV.
 
-i ($i = 1, 2, \cdots, K$) represents the i-th tissue, and j ($p = 1, 2, \cdots, p$) represents the j-th IV.
+**2)** Calculate the _**PRS**_ based on the rare variants. Treat the _**PRS**_ as a quasi exposure and perform univariable linear regression of PRS onto each variant to calculate its effect $`\hat{\boldsymbol{\gamma}}_{Pj}`$ and standard error $`\hat{\mathbf{S}}_{\gamma_{Pj}}`$.
+
+PRS can be calculated using the formula as
+
+$$
+PRS = \sum_{k=1}^{n_r} \hat{\gamma}_kG_k,
+$$
+
+where $\hat{\gamma}_k$ is the coefficient from the GWAS data representing the associations between the $k$-th rare variant and the primary exposure; and $G_k$ is a genotype vector representing the $k$-th rare variant from the individual-level genotype matrix.
+
+$\color{red}{\textbf{Note}}$: In practical applications, obtaining individual-level data often involves substantial costs and access restrictions. Therefore, the RARE study provides a simulation-based strategy as an alternative when individual-level data are unavailable. Further details of this strategy are provided in the manuscript.
 
 
-**2)** _**Estimated IV-to-outcome effect size**_ $`\hat{\boldsymbol{\Gamma}}_{ij}`$ and its _**corresponding standard error**_ $`\hat{\mathbf{S}}_{\Gamma_{ij}}`$
+**3)** _**Estimated IV-to-outcome effect size**_ $`\hat{\boldsymbol{\Gamma}}_{ij}`$ and its _**corresponding standard error**_ $`\hat{\mathbf{S}}_{\Gamma_{ij}}`$
 
 
 
