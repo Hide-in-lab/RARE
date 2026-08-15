@@ -40,24 +40,56 @@ where $\hat{\gamma}_k$ is the coefficient from the GWAS data representing the as
 
 $\color{red}{\textbf{Note}}$: In practical applications, obtaining individual-level data often involves substantial costs and access restrictions. Therefore, the RARE study provides a simulation-based strategy as an alternative when individual-level data are unavailable. Further details of this strategy are provided in the manuscript.
 
-
 **3)** _**Estimated IV-to-outcome effect size**_ $`\hat{\boldsymbol{\Gamma}}_{ij}`$ and its _**corresponding standard error**_ $`\hat{\mathbf{S}}_{\Gamma_{ij}}`$
 
-
-
-
-Let  and  be the true marginal associations of the j-th IV with the i-th exposure  and outcome , respectively. The estimated effects and standard errors of the associations between the j-th SNP and the i-th exposure and outcome from GWAS are denoted as  and , respectively.
-
-
-
 # Installation
-Install this tool by use of the 'devtools' package. Note that RARE partly depends on the C++ languange, thus you should appropriately set 
-Rtools and X code for Windows, Mac OS/X, and Linux, respectively.
+
+Install this tool by use of the `devtools` package. Note that RARE partly depends on the C++ languange, thus you should appropriately set Rtools and X code for Windows, Mac OS/X, and Linux, respectively.
 ```
 install.packages( 'devtools' )  
 library( devtools )  
 install_github( 'Hide-in-lab/RARE@main', force  = T )
 ```
+
+# Usage
+Here, I will use simulated data to demonstrate how to use the `RARE` package. Suppose you have obtained the _**PRS**_ and the individual-level genotype matrix _**G**_ according the **Data Input** section.
+
+Take the number of exposures equals to 2 ($K$ = 2) for example:
+
+**Step 1)** Computing $`\hat{\boldsymbol{\gamma}}_{Pj}`$ and standard error $`\hat{\mathbf{S}}_{\gamma_{Pj}}`$
+```
+library( MUSE ) ### Please follow https://github.com/Hide-in-lab/MUSE/tree/main to intall 
+library( RARE )
+model_gammaP <- MUSE::lm_cpp( PRS, G )
+beta_PRS <- model_gammaP$$coef
+se_PRS <- model_gammaP$std
+```
+
+**Step 2)** Get the final data input
+```
+mydata <- cbind( bx = cbind( beta_X1, beta_X2, beta_PRS ), 
+                 bxse = cbind( se_X1, se_X2, se_PRS  ), 
+                 by = beta_Y, 
+                 byse = se_Y )
+```
+<p align="center">
+  <img src="https://github.com/Hide-in-lab/RARE/blob/Supplementary/Github_RARE/Input%20Data.png?raw=true" width="60%" />
+  <br>
+  <b>Fig.1 </b>
+</p>
+
+
+**Step 3)** Calculate the causal effect and _P_ value
+```
+results <- RARE::adapt( mydata, iter_times = 5000 )
+results
+```
+<p align="center">
+  <img src="https://github.com/Hide-in-lab/RARE/blob/Supplementary/Github_RARE/Results.png" width="60%" />
+  <br>
+  <b>Fig.1 </b>
+</p>
+
 
 
 # Reference
