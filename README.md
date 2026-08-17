@@ -4,19 +4,19 @@
 
 ## Brief Introduction
 
-**RARE** (MVMR incorporating **R**are variants **A**ccounting for multiple **R**isk factors and shared horizontal pl**E**iotropy) is a multivariable Mendelian randomization (MVMR) method designed to identify the causal relationship between the main exposure ($`X_1`$) and disease outcome (_Y_), while further elucidating the modifying effects of rare genetic variants on the causal relationship. **Fig.1** shows the structure of RARE.
+**RARE** (MVMR incorporating **R**are variants **A**ccounting for multiple **R**isk factors and shared horizontal pl**E**iotropy) is a multivariable Mendelian randomization (MVMR) method designed to identify the causal relationship between the main exposure ($`X_1`$) and disease outcome ($`Y`$), while further elucidating the modifying effects of rare genetic variants on the causal relationship. **Fig.1** shows the structure of RARE.
 
 <p align="center">
   <img src="https://github.com/Hide-in-lab/RARE/blob/Supplementary/Github_RARE/Figure1.jpg?raw=true" width="40%" />
   <br>
-  <b>Fig.1 </b>
+  <b>Fig.1 Model structure of RARE</b>
 </p>
 
 ## Motivation
 
-When investigating the causal effect of common trait on disease outcome, the **estimated effect** ($\color{red}\beta_1$) **may be biased by the potential effects of other correlated traits**. For example, when evaluating the causal effect of high-density lipoprotein (HDL) on cardiovascular disease, it is important to account for the potential influences of low-density lipoprotein (LDL) and triglycerides on the effect estimate ($\color{red}\beta_i$). However, such scenarios cannot be adequately addressed by conventional univariable Mendelian randomization (UVMR), motivating the extension of MR to a multivariable framework.
+When investigating the causal effect of common trait on disease outcome, the **estimated effect** $\color{red}\beta_1$ **may be biased by the potential effects of other correlated traits**. For example, when evaluating the causal effect of high-density lipoprotein (HDL) on cardiovascular disease, it is important to account for the potential influences of low-density lipoprotein (LDL) and triglycerides on the effect estimate $\color{red}\beta_i$. However, such scenarios cannot be adequately addressed by conventional univariable Mendelian randomization (UVMR), motivating the extension of MR to a multivariable framework.
 
-In addition, in the conventional MR analysis framework, IVs are typically selected based on their minor allele frequencies (MAFs), which may lead to the exclusion of rare variants (**MAF < 0.01**, $\color{red}G_r$) and consequently **overlook the potential contributions of rare variants to causal effect estimation**. To further reduce estimation bias, RARE incorporates multiple exposures while simultaneously accounting for rare variants within the model.
+In pratical MR analysis framework, IVs are typically selected based on their minor allele frequencies (MAFs), which may lead to the exclusion of rare variants (**MAF < 0.01**, $\color{red}G_r$) and consequently **overlook the potential contributions of rare variants to causal effect estimation**. To further reduce estimation bias, RARE incorporates multiple exposures while simultaneously accounting for rare variants within the model.
 
 Compared with common variants ($\color{red}G_c$), rare variants often exhibit greater trait specificity. However, **the individual effect sizes of rare variants are generally smaller and their estimates are associated with larger variances** in GWAS data. Therefore, RARE aggregates rare variants into a **polygenic risk score** ($\color{red}PRS$) to jointly capture their effects and enhance their contribution to causal effect estimation.
 
@@ -28,15 +28,17 @@ Suppose we have _**K**_ exposures of interest, denoted as $X_1, X_2, \cdots, X_K
 
 **1)** _**Estimated IV-to-exposure effect size**_ $`\hat{\boldsymbol{\gamma}}_{ij}`$ and its _**corresponding standard error**_ $`\hat{\mathbf{S}}_{\gamma_{ij}}`$, where $i$ ($i = 1, 2, \cdots, K$) represents the $i$-th tissue, and $j$ ($j = 1, 2, \cdots, p$) represents the $j$-th IV.
 
-**2)** Calculate the _**PRS**_ based on the rare variants. Treat the _**PRS**_ as a quasi exposure and perform univariable linear regression of PRS onto each variant to calculate its effect $`\hat{\boldsymbol{\gamma}}_{Pj}`$ and standard error $`\hat{\mathbf{S}}_{\gamma_{Pj}}`$.
+**2)** _**Estimated IV-to-PRS effect size**_ $`\hat{\boldsymbol{\gamma}}_{Pj}`$ and its _**corresponding standard error**_ $`\hat{\mathbf{S}}_{\gamma_{Pj}}`$.
 
-PRS can be calculated using the formula as
+**2.1)** Users should first calculate the _**PRS**_ based on the rare variants. PRS can be calculated using the formula as
 
 $$
 PRS = \sum_{k=1}^{n_r} \hat{\gamma}_kG_k,
 $$
 
 where $\hat{\gamma}_k$ is the coefficient from the GWAS data representing the associations between the $k$-th rare variant and the primary exposure; and $G_k$ is a genotype vector representing the $k$-th rare variant from the individual-level genotype matrix.
+
+**2.2)** Then treat the _**PRS**_ as a quasi exposure and perform univariable linear regression of PRS onto each variant to calculate $`\hat{\boldsymbol{\gamma}}_{Pj}`$ and $`\hat{\mathbf{S}}_{\gamma_{Pj}}`$. 
 
 $\color{red}{\textbf{Note}}$: In practical applications, obtaining individual-level data often involves substantial costs and access restrictions. Therefore, the RARE study provides a simulation-based strategy as an alternative when individual-level data are unavailable. Further details of this strategy are provided in the manuscript.
 
